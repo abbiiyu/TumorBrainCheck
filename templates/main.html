@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/main.css">
+    <title>Klasifikasi</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="../static/otak.png" alt="logo" class="logo">
+            <h1>TumorBrainCheck</h1>
+        </header>
+    </div>
+
+    <div class="content">
+        <img src="../static/background otak.png" alt="brain background" class="brain-bg">
+
+        <form method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <div class="preview-container">
+                <img id="preview" src="#" alt="Preview Gambar" style="display: none; max-width: 200px;">
+            </div>
+            
+            <label for="fileUpload" class="custom-file-upload">
+                Pilih Gambar MRI
+            </label>
+            <input id="fileUpload" type="file" name="file" accept="image/*" onchange="showPreview(event)" required hidden>
+            
+            <p class="note">⚠️ Wajib mengunggah gambar MRI otak yang jelas</p>
+            <button type="submit">Prediksi</button>
+        </form>
+        
+    </div>
+    <script src="../static/script.js"></script>
+
+    <footer>
+        <p>&copy; 2025 Klasifikasi Tumor Otak. All rights reserved.</p>
+        <p>Created by Muhammad abiyyu al ramadhany</p>
+    </footer>
+
+</body>
+</html>

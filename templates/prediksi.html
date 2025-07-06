@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brain Tumor Classifier</title>
+  <link rel="stylesheet" href="../static/prediksi.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+    <header>
+        <img src="../static/otak.png" alt="logo" class="logo">
+        <h1>Klasifikasi Tumor Otak</h1>
+    </header>
+
+  <main>
+    <div class="prediction-box">
+      <h2>Hasil Prediksi</h2>
+      <div class="content">
+        <div class="image-section">
+          <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="MRI hasil upload" class="image-preview"/>
+          <p>Prediksi tumor: <span id="jenis-tumor">{{ prediction }}</span></p>
+        </div>
+        <div class="description">
+          <p>{{ description }}</p>
+          <a href="{{ url_for('index') }}"><button class="btn">Prediksi lagi</button></a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Klasifikasi Tumor Otak. All rights reserved.</p>
+    <p>Created by Muhammad abiyyu al ramadhany</p>
+</footer>
+</body>
+</html>

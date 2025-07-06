@@ -1,0 +1,113 @@
+body {
+margin: 0;
+font-family: 'Arial', sans-serif;
+background-color: #f8f8f8;
+}
+
+header {
+    background-color: #cbbaba;
+    padding: 10px;
+    height: 10vh;
+    display: flex;
+    align-items: center;  
+    justify-content: center;  
+    gap: 10px;
+}
+
+
+.logo {
+    height: 70px;
+    vertical-align: middle;
+}
+
+h1 {
+    display: inline;
+    margin-left: 10px;
+    font-size:  50px;
+}
+main {
+padding: 30px;
+}
+
+.prediction-box {
+background-color: #e0e0e0;
+border-radius: 20px;
+padding: 30px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+height: 60vh;
+}
+
+.prediction-box h2 {
+text-align: center;
+font-size: 2.4rem;
+}
+
+.content {
+display: flex;
+margin-top: 40px;
+gap: 30px;
+}
+
+.image-section {
+flex: 1;
+text-align: center;
+}
+
+.image-section img {
+max-width: 100%;
+border-radius: 10px;
+border: 2px solid #333;
+}
+
+.image-section p {
+font-weight: bold;
+margin-top: 5px;
+}
+
+.image-preview {
+    width: 50%;
+    max-width: 150px; /* Ubah angka ini sesuai kebutuhan tampilan */
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #333;
+  }
+  
+.description {
+flex: 2;
+font-size: 1rem;
+line-height: 1.6;
+}
+
+.btn {
+padding: 10px 25px;
+font-size: 1rem;
+background-color: #e3c5c5;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+transition: background-color 0.3s;
+box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+margin-top: 100px;
+}
+
+.btn:hover {
+background-color: #cdaaaa;
+}
+
+footer {
+    background-color: #cbbaba;
+    padding: 15px;
+    height: 10.5vh;
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
+}
+
+footer p {
+    margin-top: 20px;
+    font-size: 16px;
+    color: black ;
+    text-align: left;
+    align-items: center;
+    display: flex;
+}
