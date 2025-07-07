@@ -1,50 +1,45 @@
-# 1. IMPORT LIBRARY PENTING
 from flask import Flask, render_template, request
 from tensorflow.keras.models import load_model
-import numpy as np
-from utils import preprocess_image # Asumsi nama fungsi ini tidak berubah
 
-# 2. INISIALISASI & MEMUAT MODEL
+# Import fungsi yang sudah kita perbaiki dari utils.py
+from utils import dapatkan_hasil_prediksi
+
+# Inisialisasi aplikasi Flask
 app = Flask(__name__)
+
+# --- MEMUAT MODEL (HANYA DI SINI!) ---
+# Ini adalah satu-satunya tempat model dimuat.
 model = load_model('brain_tumor_model_finetuned.keras')
+print("--- Model berhasil dimuat sekali saja saat aplikasi start ---")
 
-# GANTI INI DENGAN KELAS ANDA, SESUAI URUTAN
-CLASS_NAMES = ['Glioma Tumor', 'Meningioma Tumor', 'No Tumor', 'Pituitary Tumor']
-
-# 3. ROUTE UNTUK HALAMAN UTAMA
+# Route untuk halaman utama
 @app.route('/')
 def index():
-    # Cukup tampilkan halaman HTML utama
-    return render_template('index.html')
+    # Menampilkan halaman utama Anda
+    return render_template('main.html') # <-- DIUBAH
 
-# 4. ROUTE UNTUK PREDIKSI
+# Route untuk prediksi
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Ambil file dari request
-    file = request.files['file']
+    # Ambil file dari form HTML
+    file = request.files.get('file')
     
-    # Jika ada file, proses
-    if file:
-        # Proses gambar langsung dari memori (bukan dari path file)
-        # Pastikan fungsi preprocess_image Anda mendukung ini
-        processed_image = preprocess_image(file)
+    if file and file.filename:
+        # Panggil fungsi dari utils.py untuk mendapatkan semua hasil sekaligus
+        # Kirim 'model' yang sudah kita load dan 'file' yang di-upload
+        nama_kelas, skor, deskripsi = dapatkan_hasil_prediksi(model, file)
         
-        # Lakukan prediksi
-        prediction = model.predict(processed_image)
+        # Buat teks hasil untuk ditampilkan
+        result_text = f'Hasil Prediksi: {nama_kelas} ({skor:.2f}%)'
         
-        # Dapatkan hasil
-        class_index = np.argmax(prediction)
-        class_name = CLASS_NAMES[class_index]
-        confidence = np.max(prediction) * 100
-        
-        result_text = f'Hasil: {class_name} ({confidence:.2f}%)'
-        
-        # Tampilkan lagi halaman utama dengan hasil prediksi
-        return render_template('index.html', prediction_text=result_text)
+        # Menampilkan halaman HASIL PREDIKSI dengan data yang dikirimkan
+        return render_template('prediksi.html',         # <-- DIUBAH
+                               prediction_text=result_text,
+                               description_text=deskripsi)
     
     # Jika tidak ada file, kembali ke halaman utama
-    return render_template('index.html')
+    return render_template('main.html') # <-- DIUBAH
 
-# (Opsional tapi sangat disarankan) Untuk menjalankan di komputer lokal
+# Untuk menjalankan di komputer lokal
 if __name__ == '__main__':
     app.run(debug=True)
