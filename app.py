@@ -34,7 +34,7 @@ def predict():
         nama_kelas, skor, deskripsi_tumor = dapatkan_hasil_prediksi(model, filepath)
         
         # Buat teks hasil untuk variabel 'prediction' di HTML
-        hasil_prediksi_text = f'{nama_kelas} ({skor:.2f}%)'
+        hasil_prediksi_text = f'{nama_kelas}'
         
         # Menampilkan halaman prediksi.html dan mengirimkan semua variabel yang dibutuhkan
         return render_template('prediksi.html', 
@@ -46,4 +46,4 @@ def predict():
 
 # Untuk menjalankan di komputer lokal
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

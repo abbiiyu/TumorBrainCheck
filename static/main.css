@@ -5,7 +5,6 @@ body {
     background-color: #f5f0f0;
 }
 
-
 header {
     background-color: #cbbaba;
     padding: 10px;
@@ -15,7 +14,6 @@ header {
     justify-content: center;  
     gap: 10px;
 }
-
 
 .logo {
     height: 70px;
@@ -43,7 +41,6 @@ h1 {
     height: auto; /* menjaga rasio */
 }
 
-
 form {
     position: absolute;
     top: 50%;
@@ -69,13 +66,11 @@ form {
 
 .custom-file-upload:hover {
     background-color: #cbbaba;
-   
 }
 
 .preview-container {
     margin-bottom: 10px;
 }
-
 
 button{
     background-color:#9e8b8b;
@@ -91,7 +86,6 @@ button:hover {
     background-color: #cbbaba;
 }
 
-
 footer {
     background-color: #cbbaba;
     padding: 15px;
@@ -106,7 +100,60 @@ footer p {
     font-size: 16px;
     color: black ;
     text-align: left;
-
     align-items: center;
     display: flex;
+}
+
+/* ===== STYLE UNTUK TAMPILAN MOBILE ===== */
+
+
+@media (max-width: 768px) {
+    header {
+        /* Sedikit sesuaikan header untuk layar kecil */
+        height: auto;
+        padding: 15px;
+        flex-direction: column; /* Susun logo dan judul ke bawah */
+        text-align: center;
+    }
+
+    h1 {
+        /* Kecilkan ukuran font judul di HP */
+        font-size: 32px;
+        margin-left: 0;
+    }
+
+    .logo {
+        height: 60px; /* Kecilkan sedikit logo */
+    }
+
+    .content {
+        /* Hapus posisi relatif agar form bisa diatur ulang */
+        position: static;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    
+    .brain-bg {
+        /* Sembunyikan gambar otak besar di background pada mode mobile */
+        /* karena form tidak lagi menimpanya */
+        display: none;
+    }
+
+    form {
+        /* Atur ulang posisi form agar normal, tidak melayang */
+        position: static;
+        transform: none; /* Hapus transform */
+        width: 90%; /* Lebar form 90% dari layar */
+        max-width: 400px; /* Batas lebar maksimum form */
+        margin-top: 20px;
+    }
+
+    footer p {
+        /* Atur agar teks di footer lebih rapi di mobile */
+        text-align: center;
+        justify-content: center;
+    }
 }
