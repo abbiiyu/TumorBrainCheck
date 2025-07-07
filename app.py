@@ -1,44 +1,48 @@
+import os
 from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
 from tensorflow.keras.models import load_model
-
-# Import fungsi yang sudah kita perbaiki dari utils.py
 from utils import dapatkan_hasil_prediksi
 
-# Inisialisasi aplikasi Flask
+# Inisialisasi aplikasi dan folder upload
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'static/uploads/'
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
 
-# --- MEMUAT MODEL (HANYA DI SINI!) ---
-# Ini adalah satu-satunya tempat model dimuat.
+# Memuat model sekali saja
 model = load_model('brain_tumor_model_finetuned.keras')
-print("--- Model berhasil dimuat sekali saja saat aplikasi start ---")
+print("--- Model berhasil dimuat ---")
 
-# Route untuk halaman utama
+# Route untuk halaman utama (main.html)
 @app.route('/')
 def index():
-    # Menampilkan halaman utama Anda
-    return render_template('main.html') # <-- DIUBAH
+    return render_template('main.html')
 
 # Route untuk prediksi
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Ambil file dari form HTML
     file = request.files.get('file')
     
     if file and file.filename:
-        # Panggil fungsi dari utils.py untuk mendapatkan semua hasil sekaligus
-        # Kirim 'model' yang sudah kita load dan 'file' yang di-upload
-        nama_kelas, skor, deskripsi = dapatkan_hasil_prediksi(model, file)
+        # Mengamankan dan menyimpan file yang di-upload
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
         
-        # Buat teks hasil untuk ditampilkan
-        result_text = f'Hasil Prediksi: {nama_kelas} ({skor:.2f}%)'
+        # Memanggil fungsi prediksi dengan LOKASI FILE
+        nama_kelas, skor, deskripsi_tumor = dapatkan_hasil_prediksi(model, filepath)
         
-        # Menampilkan halaman HASIL PREDIKSI dengan data yang dikirimkan
-        return render_template('prediksi.html',         # <-- DIUBAH
-                               prediction_text=result_text,
-                               description_text=deskripsi)
+        # Buat teks hasil untuk variabel 'prediction' di HTML
+        hasil_prediksi_text = f'{nama_kelas} ({skor:.2f}%)'
+        
+        # Menampilkan halaman prediksi.html dan mengirimkan semua variabel yang dibutuhkan
+        return render_template('prediksi.html', 
+                               prediction=hasil_prediksi_text,  # <-- Sesuai dengan {{ prediction }}
+                               description=deskripsi_tumor,    # <-- Sesuai dengan {{ description }}
+                               filename=filename)               # <-- Sesuai untuk menampilkan gambar
     
-    # Jika tidak ada file, kembali ke halaman utama
-    return render_template('main.html') # <-- DIUBAH
+    return render_template('main.html')
 
 # Untuk menjalankan di komputer lokal
 if __name__ == '__main__':
