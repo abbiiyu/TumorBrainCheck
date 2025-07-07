@@ -9,15 +9,15 @@
 <body>
     <div class="container">
         <header>
-            <img src="{{ url_for('static', filename='otak.png') }}" ...>
+            <img src="{{ url_for('static', filename='otak.png') }}" alt="logo" class="logo">
             <h1>TumorBrainCheck</h1>
         </header>
     </div>
 
     <div class="content">
-        <img src="../static/background otak.png" alt="brain background" class="brain-bg">
+        <img src="{{ url_for('static', filename='background otak.png') }}" alt="brain background" class="brain-bg">
 
-        <form method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <form action="/predict" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
             <div class="preview-container">
                 <img id="preview" src="#" alt="Preview Gambar" style="display: none; max-width: 200px;">
             </div>
@@ -32,7 +32,7 @@
         </form>
         
     </div>
-    <script src="../static/script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 
     <footer>
         <p>&copy; 2025 Klasifikasi Tumor Otak. All rights reserved.</p>
