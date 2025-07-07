@@ -1,35 +1,50 @@
-# Tambahkan print() di berbagai titik
-print("--- [1] Aplikasi Mulai, import library ---")
-from flask import Flask # dan import lainnya
+# 1. IMPORT LIBRARY PENTING
+from flask import Flask, render_template, request
 from tensorflow.keras.models import load_model
-import os
+import numpy as np
+from utils import preprocess_image # Asumsi nama fungsi ini tidak berubah
 
-# Pastikan Anda menggunakan nama file yang benar
-# MODEL_PATH = 'brain_tumor_model_finetuned.keras'
-# Jika file ada di folder lain, sesuaikan pathnya. misal: 'models/model.keras'
-
-print("--- [2] Inisialisasi aplikasi Flask ---")
+# 2. INISIALISASI & MEMUAT MODEL
 app = Flask(__name__)
+model = load_model('brain_tumor_model_finetuned.keras')
 
-print("--- [3] AKAN MEMUAT MODEL. Ini adalah titik kritis. ---")
-try:
-    # Ganti 'nama_file_model_anda.keras' dengan nama file yang sebenarnya
-    model = load_model('brain_tumor_model_finetuned.keras')
-    print("--- [4] SELAMAT! Model berhasil dimuat. ---")
-except Exception as e:
-    print(f"--- [ERROR] GAGAL MEMUAT MODEL: {e} ---")
+# GANTI INI DENGAN KELAS ANDA, SESUAI URUTAN
+CLASS_NAMES = ['Glioma Tumor', 'Meningioma Tumor', 'No Tumor', 'Pituitary Tumor']
 
+# 3. ROUTE UNTUK HALAMAN UTAMA
 @app.route('/')
 def index():
-    print("--- [5] Request masuk ke route '/' ---")
-    # Logika untuk halaman utama Anda
-    return "Selamat datang di aplikasi Brain Tumor Check!"
+    # Cukup tampilkan halaman HTML utama
+    return render_template('index.html')
 
-# Tambahkan route lain jika ada
-# @app.route('/predict', methods=['POST'])
-# def predict():
-#     print("--- [6] Request masuk ke route '/predict' ---")
-#     # Logika prediksi Anda
-#     return "Hasil Prediksi"
+# 4. ROUTE UNTUK PREDIKSI
+@app.route('/predict', methods=['POST'])
+def predict():
+    # Ambil file dari request
+    file = request.files['file']
+    
+    # Jika ada file, proses
+    if file:
+        # Proses gambar langsung dari memori (bukan dari path file)
+        # Pastikan fungsi preprocess_image Anda mendukung ini
+        processed_image = preprocess_image(file)
+        
+        # Lakukan prediksi
+        prediction = model.predict(processed_image)
+        
+        # Dapatkan hasil
+        class_index = np.argmax(prediction)
+        class_name = CLASS_NAMES[class_index]
+        confidence = np.max(prediction) * 100
+        
+        result_text = f'Hasil: {class_name} ({confidence:.2f}%)'
+        
+        # Tampilkan lagi halaman utama dengan hasil prediksi
+        return render_template('index.html', prediction_text=result_text)
+    
+    # Jika tidak ada file, kembali ke halaman utama
+    return render_template('index.html')
 
-print("--- [7] Semua definisi route selesai. Aplikasi siap berjalan. ---")
+# (Opsional tapi sangat disarankan) Untuk menjalankan di komputer lokal
+if __name__ == '__main__':
+    app.run(debug=True)
