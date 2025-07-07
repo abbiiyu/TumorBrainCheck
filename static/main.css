@@ -112,18 +112,17 @@ footer p {
         /* Sedikit sesuaikan header untuk layar kecil */
         height: auto;
         padding: 15px;
-        flex-direction: column; /* Susun logo dan judul ke bawah */
         text-align: center;
     }
 
     h1 {
         /* Kecilkan ukuran font judul di HP */
-        font-size: 32px;
+        font-size: 20px;
         margin-left: 0;
     }
 
     .logo {
-        height: 60px; /* Kecilkan sedikit logo */
+        height: 40px; /* Kecilkan sedikit logo */
     }
 
     .content {
@@ -133,7 +132,7 @@ footer p {
         flex-direction: column;
         align-items: center;
         padding-top: 40px;
-        padding-bottom: 40px;
+        padding-bottom: 140px;
     }
     
     .brain-bg {

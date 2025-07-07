@@ -118,19 +118,20 @@ footer p {
 
 @media (max-width: 768px) {
     header {
+        /* Sedikit sesuaikan header untuk layar kecil */
         height: auto;
         padding: 15px;
-        flex-direction: column;
         text-align: center;
     }
 
     h1 {
-        font-size: 32px;
+        /* Kecilkan ukuran font judul di HP */
+        font-size: 20px;
         margin-left: 0;
     }
 
     .logo {
-        height: 60px;
+        height: 40px; /* Kecilkan sedikit logo */
     }
 
     main {
