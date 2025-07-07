@@ -1,11 +1,9 @@
-<<<<<<< HEAD
+# Di dalam file utils.py
 
-=======
->>>>>>> f9cbb1bf044afe0377da7242ac46e793438addca
 from PIL import Image
 import numpy as np
 
-# Mapping label, ini sudah benar
+# Mapping label, ini sudah benar.
 label_map = {
     0: 'Glioma',
     1: 'Meningioma',
@@ -14,12 +12,12 @@ label_map = {
 }
 
 def ambil_deskripsi(label):
-    # Fungsi ini sudah benar
+    # Fungsi ini juga sudah benar, tidak perlu diubah.
     deskripsi_dict = {
-        'Glioma': 'Glioma adalah jenis tumor otak yang paling sering terjadi pada orang dewasa. Menurut American Association of Neurological, sekitar 78 persen dari total kasus tumor otak ganas tergolong sebagai glioma.',
-        'Meningioma': 'Meningioma merupakan jenis tumor otak yang tumbuh pada meninges, yaitu lapisan pelindung yang menyelimuti otak dan sumsum tulang belakang. Tumor ini dapat muncul di berbagai area otak, namun paling sering ditemukan di sekitar otak besar (cerebrum) dan otak kecil (cerebellum).',
+        'Glioma': 'Glioma adalah jenis tumor otak yang paling sering terjadi pada orang dewasa...',
+        'Meningioma': 'Meningioma merupakan jenis tumor otak yang tumbuh pada meninges...',
         'No Tumor': 'Tidak ditemukan indikasi adanya tumor pada citra MRI yang diunggah.',
-        'Pituitary': 'Tumor pituitari adalah tumor otak yang berkembang pada kelenjar pituitari, yaitu kelenjar yang mengontrol berbagai fungsi tubuh dan melepaskan hormon ke dalam aliran darah.'
+        'Pituitary': 'Tumor pituitari adalah tumor otak yang berkembang pada kelenjar pituitari...'
     }
     return deskripsi_dict.get(label, 'Deskripsi tidak tersedia.')
 
@@ -37,7 +35,7 @@ def dapatkan_hasil_prediksi(model, filepath):
 
     # Lakukan prediksi menggunakan model yang diberikan
     hasil_prediksi = model.predict(img_array)
-    
+
     # Dapatkan hasilnya
     kelas_index = np.argmax(hasil_prediksi, axis=1)[0]
     skor_kepercayaan = np.max(hasil_prediksi) * 100
