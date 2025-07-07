@@ -1,5 +1,3 @@
-# Di dalam file utils.py
-
 from PIL import Image
 import numpy as np
 
