@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> f9cbb1bf044afe0377da7242ac46e793438addca
 from PIL import Image
 import numpy as np
 
